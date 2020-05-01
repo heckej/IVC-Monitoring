@@ -9,8 +9,8 @@ of the cage.
 
 Some screenshots of the web app:
 <p float="left">
-  <img src="screenshots/webapp_1.png" width="100" />
-  <img src="screenshots/webapp_2.png" width="100" />
-  <img src="screenshots/webapp_3.png" width="100" />
-  <img src="screenshots/webapp_4.png" width="100" />
+  <img src="screenshots/webapp_1.png" width="200" />
+  <img src="screenshots/webapp_2.png" width="200" />
+  <img src="screenshots/webapp_3.png" width="200" />
+  <img src="screenshots/webapp_4.png" width="200" />
 </p>
