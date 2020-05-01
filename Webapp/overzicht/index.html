@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <title>Overzicht kooien | IVC-monitoring</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  type="text/css" href="stylesheet.css">
+    <link rel="stylesheet"  type="text/css" href="../stylesheet.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+<table class="overzicht-kooien">
+    <tr>
+        <th>Lokaliseer kooi</th>
+        <th>Rek</th>
+        <th>Kooi</th>
+        <th>Status voedsel</th>
+        <th>Status water</th>
+        <th>Prioriteit</th>
+        <th>Laatste controle</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td><i class="far fa-lightbulb" title="Laat gedurende een halve minuut de LED aan de kooi knipperen om de kooi gemakkelijk terug
+            te vinden in het rek."></i></td>
+        <td>1</td>
+        <td>A1</td>
+        <td class="food-shortage"><i class="fas fa-exclamation-triangle" style="color: Orange;"></i> TEKORT</td>
+        <td class="water-ok"><i class="fas fa-check-circle" style="color: rgb(76, 175, 80);"></i> OK</td>
+        <td>1</td>
+        <td>5 min. geleden</td>
+        <td>Meer details</td>
+    </tr>
+    <tr>
+        <td><i class="far fa-lightbulb" title="Laat gedurende een halve minuut de LED aan de kooi knipperen om de kooi gemakkelijk terug
+            te vinden in het rek."></i></td>
+        <td>1</td>
+        <td>H5</td>
+        <td class="food-problem"><i class="fas fa-times-circle" style="color: Tomato;"></i> PROBLEEM</td>
+        <td class="food-problem"><i class="fas fa-times-circle" style="color: Tomato;"></i> PROBLEEM</td>
+        <td>4</td>
+        <td>1 uur geleden</td>
+        <td>Meer details</td>
+    </tr>
+    <tr>
+        <td><i class="far fa-lightbulb" title="Laat gedurende een halve minuut de LED aan de kooi knipperen om de kooi gemakkelijk terug
+            te vinden in het rek."></i></td>
+        <td>1</td>
+        <td>C10</td>
+        <td><i class="fas fa-check-circle" style="color: rgb(76, 175, 80);"></i> OK</td>
+        <td><i class="fas fa-exclamation-triangle" style="color: Orange;"></i> AANDACHT</td>
+        <td>1</td>
+        <td>Vandaag om 12:25</td>
+        <td>Meer details</td>
+    </tr>
+    <tr>
+        <td><i class="far fa-lightbulb" title="Laat gedurende een halve minuut de LED aan de kooi knipperen om de kooi gemakkelijk terug
+            te vinden in het rek."></i></td>
+        <td>1</td>
+        <td>B7</td>
+        <td><i class="fas fa-exclamation-triangle" style="color: Orange;"></i> TEKORT</td>
+        <td><i class="fas fa-exclamation-triangle" style="color: Orange;"></i> TEKORT</td>
+        <td>2</td>
+        <td>Op 25/11/2018 om 15:52</td>
+        <td>Meer details</td>
+    </tr>
+</table>
+
+
+<div class="kooi-popup">
+    <h2>Kooi H5 (rek 1)</h2>
+    <span class="check-time">Laatste controle: 1 uur geleden</span>
+
+    <div class="kooi-details">
+        <div class="notifications">
+            <h3>Meldingen</h3>
+            <div class="notification">
+                <span class="notification-time">1 uur geleden</span>
+                Kooi H5 kan niet worden gedetecteerd: controleer de kabels.
+            </div>
+            <div class="notification">
+                <span class="notification-time">Vandaag om 12:32</span>
+                Kooi H5 kan niet worden gedetecteerd: controleer de kabels.
+            </div>
+            <div class="notification">
+                <span class="notification-time">Vandaag om 12:02</span>
+                Kooi H5 heeft eten te kort.
+            </div>
+        </div>
+        <div class="actions">
+            <h3>Acties</h3>
+            <div class="options">
+                <div class="option" title="Laat gedurende een halve minuut de LED aan de kooi knipperen om de kooi gemakkelijk terug te vinden in het rek.">
+                    <i class="far fa-lightbulb"></i>
+                    <br>Toon kooi
+                </div>
+                <div class="option">
+                    <i class="fas fa-ban"></i>
+                    <br>Stop meldingen
+                </div>
+            </div>
+        </div>
+        <div class="status">
+            <h3>Status</h3>
+            <ul>
+                <li>Voedsel: <i class="fas fa-times-circle" style="color: Tomato;"></i> PROBLEEM</li>
+                <li>Water: <i class="fas fa-times-circle" style="color: Tomato;"></i> PROBLEEM</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

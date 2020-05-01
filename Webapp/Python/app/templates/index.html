@@ -1,0 +1,44 @@
+<!<!DOCTYPE html>
+<<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  type="text/css" href="{{url_for('static', filename='page_styles.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  </head>
+  <body>
+    <!-- Top bar -->
+    <header class="top-bar">
+        <div class="top-app-bar__row">
+            <section class="top-app-bar__section top-app-bar__section--align-start">
+                <button class="material-icons top-app-bar__navigation-icon">arrow_back</button>
+                <span class="top-app-bar__title">Title</span>
+            </section>
+            <section class="top-app-bar__section top-app-bar_section--align-center">
+                <input class="top-app-bar__search-bar" type="search" placeholder="Look up cage details" />
+            </section>
+            <section class="top-app-bar__section top-app-bar__section--align-end">
+                <button class="material-icons top-app-bar__action-item" aria-label="Maintenance"><!--<i class="fas fa-clipboard-list"></i>-->playlist_add_check</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Update status">refresh</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Settings">settings</button>
+                <button class="material-icons top-app-bar__action-item top-bar__mobile-only" id="drop-down">more_vert</button>
+            </section>
+        </div>
+        <section class="top-app-bar__section top-app-bar__dropout-menu top-bar__mobile-only" id="dropdown-menu">
+            <button class="dropout-menu-item">Update status</button>
+            <button class="dropout-menu-item">Search cage</button>
+            <button class="dropout-menu-item">Settings</button>
+        </section>
+    </header>
+    <!-- end top bar -->
+
+    <section class="summary-options">
+      <button>Notifications</button>
+      <button>Cages</button>
+      <button>Settings</button>
+    </section>
+  </body>
+</html>

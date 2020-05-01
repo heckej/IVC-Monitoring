@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cage {{ cage.cage_id }} | IVC-monitors | Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  type="text/css" href="http://169.254.148.23/css/page_styles.css">
+    <link rel="stylesheet" href="http://169.254.148.23/material/material.css">
+    <link rel="stylesheet" href="http://169.254.148.23/fa/css/all.css">
+    <script defer src="http://169.254.148.23/fa/js/all.js"></script>
+    <script src="http://169.254.148.23/js/top_bar.js"></script>
+    <style>
+        .content-app-card-update time {
+            color: #a6a6a6;
+        }
+        .fa-exclamation-triangle {
+            color: Orange;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="top-app-bar__row">
+            <section class="top-app-bar__section top-app-bar__section--align-start">
+                <button class="material-icons top-app-bar__navigation-icon" onclick="window.location = '/cages'">arrow_back</button>
+                <span class="top-app-bar__title">Details</span>
+            </section>
+            <!--<section class="top-app-bar__section top-app-bar_section--align-center">
+                <input class="top-app-bar__search-bar" type="search" placeholder="Look up cage details" />
+            </section>-->
+            <section class="top-app-bar__section top-app-bar__section--align-end">
+                <button class="material-icons top-app-bar__action-item" aria-label="Cages" onclick="window.location = '/cages'"><!--<i class="fas fa-clipboard-list"></i>-->playlist_add_check</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Updates" onclick="window.location = '/updates'">notifications</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Update status" onclick="window.location = '/refresh/{{ cage.cage_id }}'">refresh</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Settings" onclick="window.location = '/settings'">settings</button>
+                <!--<button class="material-icons top-app-bar__action-item top-bar__mobile-only" id="drop-down">more_vert</button>-->
+            </section>
+        </div>
+        <!-- Dropdown menu -->
+        <!--<section class="top-app-bar__section top-app-bar__dropout-menu top-bar__mobile-only" id="dropdown-menu">
+            <button class="dropout-menu-item" onclick="window.location = '/refresh/{{ cage.cage_id }}'">Update status</button>
+            <!--<button class="dropout-menu-item">Search cage</button>-->
+            <!--<button class="dropout-menu-item" onclick="window.location = '/settings'">Settings</button>
+        </section>-->
+    </header>
+    <div class="content-app-cards">
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2>Cage {{ cage.cage_id }}</h2>
+                <p>Last update: <time datetime="{{ cage.last_update }}">{{ cage.last_update }}</time></p>
+                <p>Last supply: <time datetime="{{ cage.last_supply }}">{{ cage.last_supply }}</time></p>
+                <!--<button class="content-app-card-button" onclick="window.location = '/refresh/{{ cage.cage_id }}'">Update cage status</button>-->
+            </header>
+            <h3>Status</h3>
+            <ul>
+                <li data-shortage="{{ (cage.water|string).lower() }}" class="cage-details-status-water"><i class="cage-status-water fas fa-tint" data-shortage="{{ (cage.water|string).lower() }}"></i> Water:
+                    {% if cage.water %}
+                    SHORTAGE
+                    {% elif cage.water is not none %}
+                    OK
+                    {% else %}
+                    UNKNOWN
+                    {% endif %}
+                </li>
+                <li data-shortage="{{ (cage.food|string).lower() }}" class="cage-details-status-food"><i class="cage-status-food fas fa-utensils" data-shortage="{{ (cage.food|string).lower() }}"></i> Food:
+                    {% if cage.food %}
+                    SHORTAGE
+                    {% elif cage.food is not none %}
+                    OK
+                    {% else %}
+                    UNKNOWN
+                    {% endif %}
+                </li>
+            </ul>
+        </section>
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h3>Notification history</h3>
+            </header>
+            <ul class="content-app-cage-notifications">
+                {% for notif in cage.notifications %}
+                    <li data-notif-id="{{ notif }}" class="content-app-card-update"><time datetime="{{ cage.notifications[notif].datetime }}">{{ cage.notifications[notif].datetime }}</time>:
+                        {% if cage.notifications[notif].type == "water" %}
+                            <i class="fas fa-tint"></i>
+                        {% elif cage.notifications[notif].type == "food" %}
+                            <i class="fas fa-utensils"></i>
+                        {% else %}
+                            <i class="fas fa-exclamation-triangle" style="color: Orange;"></i>
+                        {% endif %}
+                        {{ cage.notifications[notif].message }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if cage.notifications|length < 1 %}
+                <em>Click the update button to receive information on the cage conditions.</em>
+            {% endif %}
+        </section>
+    </div>
+
+
+    <script>
+        // Save scrollTop for later use.
+        var scrollTop = window.scrollY;
+        var d = new Date();
+        var millisStart = d.getTime();
+         /*document.getElementById("drop-down").addEventListener("click", () => toggleMenu());
+         document.addEventListener("click", function(e) {
+            console.log(e.target);
+            var menu = document.getElementById("dropdown-menu");
+            if(e.target != menu && e.target != document.getElementById("drop-down") && menu.style.display == "block") {
+                toggleMenu();
+            };
+         });
+
+         function toggleMenu() {
+            menu = document.getElementById("dropdown-menu");
+            dropdown = document.getElementById("drop-down");
+            if(menu.style.display == "block") {
+                console.log("hide");
+                menu.style.display = "none";
+                dropdown.classList.remove("top-app-bar__icon-active");
+            } else {
+                console.log(menu.style.display);
+                console.log("show");
+                menu.style.display = "block";
+                dropdown.classList.add("top-app-bar__icon-active");
+            }
+         }*/
+
+        // Show top bar when scroll up.
+        document.addEventListener("scroll", () => toggleTopBarOnScroll());
+        function toggleTopBarOnScroll() {
+            // Set delay
+            d = new Date();
+            millisNow = d.getTime();
+            differenceMillis = millisNow - millisStart;
+            limit = 500;
+            console.log(differenceMillis);
+            topBar = document.getElementsByClassName("top-bar")[0];
+            //dropdown = document.getElementById("drop-down");
+            newScrollTop = window.scrollY;
+            if(scrollTop > newScrollTop) {
+                if(differenceMillis > limit) {
+                    topBar.style.position = "fixed";
+                    topBar.style.top = "0px";
+                    topBar.style.width = "100%";
+                    console.log("up");
+                    millisStart = millisNow;
+                }
+            }/* else if(!dropdown.classList.contains("top-app-bar__icon-active")) {
+               topBar.style.position = "absolute";
+               topBar.style.width = "100%";
+               topBar.style.top = newScrollTop;
+               console.log("down");
+            }*/
+            if(newScrollTop == 0) {
+                topBar.style.position = "";
+                topBar.style.top = "";
+                topBar.style.width = "";
+            }
+            scrollTop = newScrollTop;
+        }
+    </script>
+    <script>
+        /*function updateCage() {
+            w.postMessage("refresh {{ cage.cage_id }}");
+        }
+
+        var w;
+        function startWorker() {
+          if(typeof(Worker) !== "undefined") {
+            if(typeof(w) == "undefined") {
+              w = new Worker("static/update_cage_x.js");
+            }
+            w.onmessage = function(event) {
+                cages = event.data;
+                cageStatus = document.querySelectorAll('[data-cage="' + data.cage_id + '"]');
+                cageStatus[0].setAttribute("data-shortage", cage.water);
+                cageStatus[1].setAttribute("data-shortage", cage.food);
+                try {
+                    lastNotif = document.querySelectorAll('[data-notif-id="' + data.notification.id
+                } catch(err) {
+                    notifCard = document.getElementsByClassName("content-app-cage-notifications")[0[
+                    var newNotif = document.createElement("LI");       // Create a <li> node
+                    newNotif.setAttribute("data-notif-id", data.notification.id);
+                    newNotif.setAttribute("class", "content-app-card-update");
+                    var logo = document.createElement("I");
+                    switch(data.notification.type) {
+                        case "water":
+                            logo.setAttribute("class", "fas fa-tint");
+                            break;
+                        case "food":
+                            logo.setAttribute("class", "fas fa-utensils");
+                            break;
+                        default:
+                            logo.setAttribute("class", "fas fa-exclamation-triangle");
+                     var timing = document.createElement("TIME");
+                     timing.setAttribute("datetime", data.notification.datetime);
+                     var textnode = document.createTextNode(data.notification.datetime + ": ");
+                     timing.appendChild(textnode);
+                     content = document.createTextNode(" " + data.notification.msg);
+
+                    newNotif.appendChild(logo);
+                    newNotif.appendChild(timing);
+                    newNotif.appendChild(content);
+                    notifCard.insertBefore(newNotif, notifCard.childNodes[0]);  // Insert <li> before the first child of <ul>
+                }
+            };
+          } else {
+            //document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Workers...";
+          }
+        }
+
+        function stopWorker() {
+          w.terminate();
+          w = undefined;
+        }
+        startWorker();
+        window.onbeforeunload = function(){
+          stopWorker();
+        };*/
+    </script>
+</body>
+</html>

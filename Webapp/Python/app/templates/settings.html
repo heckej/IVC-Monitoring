@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings | IVC-monitors | Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  type="text/css" href="http://169.254.148.23/css/page_styles.css">
+    <link rel="stylesheet" href="http://169.254.148.23/material/material.css">
+    <link rel="stylesheet" href="http://169.254.148.23/fa/css/all.css">
+    <script defer src="http://169.254.148.23/fa/js/all.js"></script>
+    <script src="http://169.254.148.23/js/top_bar.js"></script>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="top-app-bar__row">
+            <section class="top-app-bar__section top-app-bar__section--align-start">
+                <button class="material-icons top-app-bar__navigation-icon" onclick="window.history.go(-1); return false;">arrow_back</button>
+                <span class="top-app-bar__title">Settings</span>
+            </section>
+            <!--<section class="top-app-bar__section top-app-bar_section--align-center">
+                <input class="top-app-bar__search-bar" type="search" placeholder="Look up cage details" />
+            </section>-->
+            <section class="top-app-bar__section top-app-bar__section--align-end">
+                <button class="material-icons top-app-bar__action-item" aria-label="Cages" onclick="window.location = '/cages'"><!--<i class="fas fa-clipboard-list"></i>-->playlist_add_check</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Updates" onclick="window.location = '/updates'">notifications</button>
+                <!--<button class="material-icons top-app-bar__action-item" aria-label="Update status">refresh</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Settings">settings</button>-->
+                <!--<button class="material-icons top-app-bar__action-item top-bar__mobile-only" id="drop-down">more_vert</button>-->
+            </section>
+        </div>
+        <!--<section class="top-app-bar__section top-app-bar__dropout-menu top-bar__mobile-only" id="dropdown-menu">
+            <button class="dropout-menu-item">Update status</button>
+            <!--<button class="dropout-menu-item">Search cage</button>-->
+            <!--<button class="dropout-menu-item">Settings</button>
+           <button class="dropout-menu-item">About</button>
+        </section>-->
+    </header>
+    <div class="content-app-cards">
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2>Water limit</h2>
+               <p>Set the measurement limit to define when the amount of water should be considered as a shortage.</p>
+            </header>
+            Limit: <input form="save" type="number" name="setting-water_limit" min="100" max="1023" value="{{ water_limit }}">
+
+        </section>
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2>Measurement time interval</h2>
+               <p>Set the timeout used between two measurement series when automatically measuring the cage conditions.
+               This interval is the time between the last measurement of the last cage and the next measurement of the first cage.</p>
+            </header>
+            Interval: <input form="save" type="number" name="setting-measure_interval" min="5" max="86400" value="{{ measure_interval }}"> seconds
+        </section>
+
+        <section class="content-app-card">
+            <form action="/settings" method="post" id="save">
+                <input type="submit" value="Save changes">
+                {% if updated %}
+                    <span>Changes saved</span>
+                {% endif %}
+            </form>
+        </section>
+
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2>Reset measurements</h2>
+               <p>Delete all gathered measure data. Be aware of the fact that this cannot be undone.</p>
+            </header>
+            <form action="/settings" method="post" id="reset">
+                <input type="submit" name="reset" value="Reset">
+                {% if reset %}
+                    <span>Reset completed</span>
+                {% endif %}
+            </form>
+        </section>
+
+    </div>
+
+
+    <script>
+        // Save scrollTop for later use.
+        var scrollTop = window.scrollY;
+        var d = new Date();
+        var millisStart = d.getTime();
+         /*document.getElementById("drop-down").addEventListener("click", () => toggleMenu());
+         document.addEventListener("click", function(e) {
+            console.log(e.target);
+            var menu = document.getElementById("dropdown-menu");
+            if(e.target != menu && e.target != document.getElementById("drop-down") && menu.style.display == "block") {
+                toggleMenu();
+            };
+         });
+
+         function toggleMenu() {
+            menu = document.getElementById("dropdown-menu");
+            dropdown = document.getElementById("drop-down");
+            if(menu.style.display == "block") {
+                console.log("hide");
+                menu.style.display = "none";
+                dropdown.classList.remove("top-app-bar__icon-active");
+            } else {
+                console.log(menu.style.display);
+                console.log("show");
+                menu.style.display = "block";
+                dropdown.classList.add("top-app-bar__icon-active");
+            }
+         }*/
+
+        // Show top bar when scroll up.
+        document.addEventListener("scroll", () => toggleTopBarOnScroll());
+        function toggleTopBarOnScroll() {
+            // Set delay
+            d = new Date();
+            millisNow = d.getTime();
+            differenceMillis = millisNow - millisStart;
+            limit = 500;
+            console.log(differenceMillis);
+            topBar = document.getElementsByClassName("top-bar")[0];
+            //dropdown = document.getElementById("drop-down");
+            newScrollTop = window.scrollY;
+            if(scrollTop > newScrollTop) {
+                if(differenceMillis > limit) {
+                    topBar.style.position = "fixed";
+                    topBar.style.top = "0px";
+                    topBar.style.width = "100%";
+                    console.log("up");
+                    millisStart = millisNow;
+                }
+            }/* else if(!dropdown.classList.contains("top-app-bar__icon-active")) {
+               topBar.style.position = "absolute";
+               topBar.style.width = "100%";
+               topBar.style.top = newScrollTop;
+               console.log("down");
+            }*/
+            if(newScrollTop == 0) {
+                topBar.style.position = "";
+                topBar.style.top = "";
+                topBar.style.width = "";
+            }
+            scrollTop = newScrollTop;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <meta http-equiv="refresh" content="200">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  type="text/css" href="page_styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="top-app-bar__row">
+            <section class="top-app-bar__section top-app-bar__section--align-start">
+                <button class="material-icons top-app-bar__navigation-icon">arrow_back</button>
+                <span class="top-app-bar__title">Stats</span>
+            </section>
+            <section class="top-app-bar__section top-app-bar_section--align-center">
+                <input class="top-app-bar__search-bar" type="search" placeholder="Look up cage details" />
+            </section>
+            <section class="top-app-bar__section top-app-bar__section--align-end">
+                <button class="material-icons top-app-bar__action-item" aria-label="Maintenance"><!--<i class="fas fa-clipboard-list"></i>-->playlist_add_check</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Update status">refresh</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Settings">settings</button>
+                <button class="material-icons top-app-bar__action-item top-bar__mobile-only" id="drop-down">more_vert</button>
+            </section>
+        </div>
+        <section class="top-app-bar__section top-app-bar__dropout-menu top-bar__mobile-only" id="dropdown-menu">
+            <button class="dropout-menu-item">Update status</button>
+            <button class="dropout-menu-item">Search cage</button>
+            <button class="dropout-menu-item">Settings</button>
+        </section>
+    </header>
+    <div class="content-app-cards">
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2>Numbers</h2>
+            </header>
+            <ul>
+                <li>Supply every <strong>7 days</strong></li>
+                <li>Average time until water shortage: <strong>5 days</strong></li>
+                <li>Average time until food shortage: <strong>6 days</strong></li>
+            </ul>
+        </section>
+    </div>
+
+
+    <script>
+        // Save scrollTop for later use.
+        var scrollTop = window.scrollY;
+        var d = new Date();
+        var millisStart = d.getTime();
+
+        // Toggle drop down menu when ...-button is clicked.
+        document.getElementById("drop-down").addEventListener("click", () => toggleMenu());
+
+        // Close drop down menu when anything is clicked unless the menu itself.
+        document.addEventListener("click", function(e) {
+           console.log(e.target);
+           var menu = document.getElementById("dropdown-menu");
+           if(e.target != menu && e.target != document.getElementById("drop-down") && menu.style.display == "block") {
+               toggleMenu();
+           };
+        });
+
+        // Show top bar when scroll up.
+        document.addEventListener("scroll", () => toggleTopBarOnScroll());
+
+        function toggleMenu() {
+            topBar = document.getElementsByClassName("top-bar")[0];
+            menu = document.getElementById("dropdown-menu");
+            dropdown = document.getElementById("drop-down");
+            if(menu.style.display == "block") {
+                menu.style.display = "none";
+                dropdown.classList.remove("top-app-bar__icon-active");
+            } else {
+                menu.style.display = "block";
+                dropdown.classList.add("top-app-bar__icon-active");
+                if(window.scrollY == 0) {
+                    topBar.style.position = "fixed";
+                    topBar.style.top = "0px";
+                    topBar.style.width = "100%";
+                }
+            }
+        }
+
+        function toggleTopBarOnScroll() {
+            // Set delay
+            d = new Date();
+            millisNow = d.getTime();
+            differenceMillis = millisNow - millisStart;
+            limit = 500;
+            console.log(differenceMillis);
+            topBar = document.getElementsByClassName("top-bar")[0];
+            dropdown = document.getElementById("drop-down");
+            newScrollTop = window.scrollY;
+            if(scrollTop > newScrollTop) {
+                if(differenceMillis > limit) {
+                    topBar.style.position = "fixed";
+                    topBar.style.top = "0px";
+                    topBar.style.width = "100%";
+                    console.log("up");
+                    millisStart = millisNow;
+                }
+            } else if(!dropdown.classList.contains("top-app-bar__icon-active")) {
+               topBar.style.position = "absolute";
+               topBar.style.width = "100%";
+               topBar.style.top = newScrollTop;
+               console.log("down");
+            }
+            if(newScrollTop == 0) {
+                topBar.style.position = "";
+                topBar.style.top = "";
+                topBar.style.width = "";
+            }
+            scrollTop = newScrollTop;
+        }
+    </script>
+</body>
+</html>

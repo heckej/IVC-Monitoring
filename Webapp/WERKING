@@ -1,0 +1,12 @@
+IDEE VOOR webapp EN dataverwerking VOOR METINGEN EN MONITORING
+
+Basis: bij opstarten van Raspberry Pi wordt een linux bash file uitgevoerd met daarin volgende commando's:
+- Voer main.py uit
+- Voer op geregelde basis (1x per [tijd]) clean.py uit # i.e. ruim rommel op
+- Voer op geregelde basis (1x per [tijd]) statistics.py uit # i.e. analyseer meetgegevens
+
+Daarnaast: webapp
+- Toon info op basis van gegevens uit database (metingen, meldingen, instellingen, geregistreerde kooien, statistieken)
+- Sta toe om zaken te beheren (instellingen wijzigen, opdracht geven om LED kooi te doen knipperen, reset metingen voor
+bepaalde kooi)
+- Push van notify.py met telkens laatste melding (komt uit database).

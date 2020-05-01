@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <meta http-equiv="refresh" content="200">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  type="text/css" href="page_styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="top-app-bar__row">
+            <section class="top-app-bar__section top-app-bar__section--align-start">
+                <button class="material-icons top-app-bar__navigation-icon">arrow_back</button>
+                <span class="top-app-bar__title">Updates</span>
+            </section>
+            <section class="top-app-bar__section top-app-bar_section--align-center">
+                <input class="top-app-bar__search-bar" type="search" placeholder="Look up cage details" />
+            </section>
+            <section class="top-app-bar__section top-app-bar__section--align-end">
+                <button class="material-icons top-app-bar__action-item" aria-label="Maintenance"><!--<i class="fas fa-clipboard-list"></i>-->playlist_add_check</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Update status">refresh</button>
+                <button class="material-icons top-app-bar__action-item" aria-label="Settings">settings</button>
+                <button class="material-icons top-app-bar__action-item top-bar__mobile-only" id="drop-down">more_vert</button>
+            </section>
+        </div>
+        <section class="top-app-bar__section top-app-bar__dropout-menu top-bar__mobile-only" id="dropdown-menu">
+            <button class="dropout-menu-item">Update status</button>
+            <button class="dropout-menu-item">Search cage</button>
+            <button class="dropout-menu-item">Settings</button>
+        </section>
+    </header>
+    <div class="content-app-cards">
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2><i class="fas fa-tint" style="color: DodgerBlue;"></i> Kooi H5</h2>
+                <p><time datetime="2018-12-06T00:31:24+02:00">30 min. geleden</time></p>
+            </header>
+            <p>Kooi H5 heeft water te kort.</p>
+        </section>
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2><i class="fas fa-exclamation-triangle" style="color: Orange;"></i> Kooi A2</h2>
+                <p><time datetime="2018-12-06T00:26:30+02:00">35 min. geleden</time></p>
+            </header>
+            <p>Er kan geen verbinding worden gemaakt met kooi A2.</p>
+        </section>
+        <section class="content-app-card">
+            <header class="content-app-card__title">
+                <h2><i class="fas fa-tint" style="color: DodgerBlue;"></i> <i class="fas fa-utensils" style="color: #ff3300;"></i> Kooi B4</h2>
+                <p><time datetime="2018-12-06T00:16:05+02:00">45 min. geleden</time></p>
+            </header>
+            <p>Kooi B4 heeft water en eten te kort.</p>
+        </section>
+    </div>
+
+
+    <script>
+         document.getElementById("drop-down").addEventListener("click", () => toggleMenu());
+         document.addEventListener("click", function(e) {
+            console.log(e.target);
+            var menu = document.getElementById("dropdown-menu");
+            if(e.target != menu && e.target != document.getElementById("drop-down") && menu.style.display == "block") {
+                toggleMenu();
+            };
+         });
+
+         function toggleMenu() {
+            menu = document.getElementById("dropdown-menu");
+            dropdown = document.getElementById("drop-down");
+            if(menu.style.display == "block") {
+                console.log("hide");
+                menu.style.display = "none";
+                dropdown.classList.remove("top-app-bar__icon-active");
+            } else {
+                console.log(menu.style.display);
+                console.log("show");
+                menu.style.display = "block";
+                dropdown.classList.add("top-app-bar__icon-active");
+            }
+         }
+    </script>
+</body>
+</html>
